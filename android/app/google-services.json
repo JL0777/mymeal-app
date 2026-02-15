@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "208497786566",
-    "project_id": "mymeal-app-a205c",
-    "storage_bucket": "mymeal-app-a205c.firebasestorage.app"
+    "project_number": "447468997726",
+    "project_id": "my-meal-6a780",
+    "storage_bucket": "my-meal-6a780.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:208497786566:android:7f6933ec8546334207a1c7",
+        "mobilesdk_app_id": "1:447468997726:android:6569839117752bc2b6f8cf",
         "android_client_info": {
           "package_name": "com.example.mymeal_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyB8KYOEAMoYXNjVcFaO9T3_jbKqFT2LgQg"
+          "current_key": "AIzaSyBiZRjOSC1LUB9pJiotz9VU3C6MuU0mMEU"
         }
       ],
       "services": {
