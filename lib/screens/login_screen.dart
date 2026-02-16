@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'register_screen.dart';
 import 'home_screen.dart';
+import 'package:mymeal_app/screens/admin/admin_home_screen.dart';
+import 'package:mymeal_app/services/auth_service.dart';
+import 'package:mymeal_app/screens/cocinero/cocinero_home_screen.dart';
 
 /// Pantalla de inicio de sesión de usuarios existentes.
 /// Usa Firebase Authentication para verificar las credenciales
@@ -47,18 +50,24 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = true);
 
     try {
-      // Iniciamos sesión en Firebase Auth con correo y contraseña
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
+      // Iniciamos sesión en Firebase Auth
+      UserCredential credenciales = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+          );
 
       if (mounted) {
+        // Consultamos el rol del usuario en Firestore
+        String rol = await AuthService().obtenerRolUsuario(
+          credenciales.user!.uid,
+        );
+
         // Mostramos aviso de inicio de sesión exitoso
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: const Text(
-              '¡Bienvenido de nuevo a MyMeal! 👋',
+              '¡Bienvenido de nuevo a MyMeal!',
               textAlign: TextAlign.center,
             ),
             backgroundColor: Colors.green,
@@ -71,11 +80,21 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         );
 
-        // Esperamos 2 segundos para que el usuario vea el mensaje
         await Future.delayed(const Duration(seconds: 2));
 
-        // Navegamos al Home eliminando todo el historial de navegación
-        if (mounted) {
+        if (rol == 'admin') {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const AdminHomeScreen()),
+            (route) => false,
+          );
+        } else if (rol == 'cocinero') {
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const CocineroHomeScreen()),
+            (route) => false,
+          );
+        } else {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const HomeScreen()),
