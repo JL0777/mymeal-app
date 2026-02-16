@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class AuthService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  /// Retorna "admin" o "cliente" según el rol en Firestore.
+  /// Retorna según el rol en Firestore.
   /// Si no encuentra documento retorna "cliente" por defecto.
   Future<String> obtenerRolUsuario(String uid) async {
     try {

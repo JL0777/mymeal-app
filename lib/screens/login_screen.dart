@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'register_screen.dart';
-import 'home_screen.dart';
+import '../cliente/home_screen.dart';
 import 'package:mymeal_app/screens/admin/admin_home_screen.dart';
 import 'package:mymeal_app/services/auth_service.dart';
 import 'package:mymeal_app/screens/cocinero/cocinero_home_screen.dart';

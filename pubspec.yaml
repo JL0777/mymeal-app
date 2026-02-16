@@ -31,3 +31,4 @@ flutter:
   assets:
     - assets/images/background.png
     - assets/images/logo_mymeal.png
+    - assets/images/admin.png
