@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart'; // Este archivo ya lo tienes en tu proyecto
 import 'screens/welcome_screen.dart';
+import 'core/theme/app_theme.dart';
 
 /// Punto de entrada de la aplicación.
 /// Firebase debe inicializarse ANTES de correr la app.
@@ -18,6 +19,7 @@ void main() async {
   runApp(const MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'My Meal',
       debugShowCheckedModeBanner: false,
+      theme: AppTheme.theme,
       home: const WelcomeScreen(),
     );
   }
