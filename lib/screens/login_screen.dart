@@ -202,7 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 // ── LOGO ─────────────────────────────────────
                 const SizedBox(height: 8),
-                Image.asset('assets/images/logo_mymeal.png', width: 200),
+                Image.asset('assets/images/logo_mymeal.png', width: 250),
                 const SizedBox(height: 16),
 
                 // ─────────────────────────────────────────────
@@ -213,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     margin: const EdgeInsets.only(left: 16, right: 16),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(40),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.25),
