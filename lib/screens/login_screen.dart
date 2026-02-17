@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'register_screen.dart';
-import '../cliente/home_screen.dart';
+import 'package:mymeal_app/screens/cliente/home_screen.dart';
 import 'package:mymeal_app/screens/admin/admin_home_screen.dart';
 import 'package:mymeal_app/services/auth_service.dart';
 import 'package:mymeal_app/screens/cocinero/cocinero_home_screen.dart';
@@ -82,24 +82,27 @@ class _LoginScreenState extends State<LoginScreen> {
 
         await Future.delayed(const Duration(seconds: 2));
 
-        if (rol == 'admin') {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const AdminHomeScreen()),
-            (route) => false,
-          );
-        } else if (rol == 'cocinero') {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const CocineroHomeScreen()),
-            (route) => false,
-          );
-        } else {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
-            (route) => false,
-          );
+        if (mounted) {
+          if (rol == 'admin') {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const AdminHomeScreen()),
+              (route) => false,
+            );
+          } else if (rol == 'cocinero') {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const CocineroHomeScreen()),
+              (route) => false,
+            );
+          } else {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              (route) => false,
+            );
+          }
         }
       }
     } on FirebaseAuthException catch (e) {
@@ -168,7 +171,6 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           // ─────────────────────────────────────────────────────
           // FONDO COMPLETO: Imagen de fondo que ocupa toda la pantalla.
-          // alignment: bottomCenter muestra la parte inferior de la imagen.
           // ─────────────────────────────────────────────────────
           Positioned.fill(
             child: Image.asset(
@@ -184,8 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
 
           // ─────────────────────────────────────────────────────
-          // CONTENIDO PRINCIPAL: SafeArea para respetar el notch
-          // y la barra de estado del celular.
+          // CONTENIDO PRINCIPAL
           // ─────────────────────────────────────────────────────
           SafeArea(
             child: Column(
@@ -201,21 +202,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 // ── LOGO ─────────────────────────────────────
                 const SizedBox(height: 8),
-                Image.asset('assets/images/logo_mymeal.png', width: 750),
+                Image.asset('assets/images/logo_mymeal.png', width: 200),
                 const SizedBox(height: 16),
 
                 // ─────────────────────────────────────────────
-                // TARJETA FLOTANTE: El formulario flota sobre la imagen.
-                // Mismo diseño que la pantalla de registro.
+                // TARJETA FLOTANTE
                 // ─────────────────────────────────────────────
                 Expanded(
                   child: Container(
                     margin: const EdgeInsets.only(left: 16, right: 16),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      // Border radius de 8 en todas las esquinas
-                      borderRadius: BorderRadius.circular(40),
-                      // Sombra para darle el efecto flotante
+                      borderRadius: BorderRadius.circular(8),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.25),
@@ -225,8 +223,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     child: SingleChildScrollView(
-                      // SingleChildScrollView permite hacer scroll
-                      // si el teclado empuja el contenido hacia arriba
                       padding: const EdgeInsets.symmetric(
                         horizontal: 24,
                         vertical: 20,
@@ -235,7 +231,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // ── TAB INICIAR SESIÓN / REGISTRARSE ──
-                          // El tab de Iniciar Sesión está activo (naranja)
                           Container(
                             decoration: BoxDecoration(
                               color: const Color(0xFFEEEEEE),
@@ -269,7 +264,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Expanded(
                                   child: GestureDetector(
                                     onTap: () {
-                                      // Reemplaza la pantalla actual por Registro
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
@@ -325,15 +319,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 16),
 
                           // ── CAMPO CONTRASEÑA ─────────────────
-                          // isPassword activa el ícono de ojo para
-                          // mostrar u ocultar la contraseña
                           _buildTextField(
                             label: 'Contraseña',
                             controller: _passwordController,
                             isPassword: true,
                             isPasswordVisible: _passwordVisible,
                             onTogglePassword: () {
-                              // Cambia el estado de visibilidad de la contraseña
                               setState(
                                 () => _passwordVisible = !_passwordVisible,
                               );
@@ -343,7 +334,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 12),
 
                           // ── LINK OLVIDASTE TU CONTRASEÑA ─────
-                          // GestureDetector convierte el texto en enlace tocable
                           Align(
                             alignment: Alignment.centerLeft,
                             child: GestureDetector(
@@ -366,7 +356,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             width: double.infinity,
                             height: 52,
                             child: ElevatedButton(
-                              // Si está cargando desactivamos el botón
                               onPressed: _isLoading ? null : _iniciarSesion,
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xFFE8651A),
@@ -377,7 +366,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 elevation: 0,
                               ),
                               child: _isLoading
-                                  // Mientras carga muestra un spinner blanco
                                   ? const CircularProgressIndicator(
                                       color: Colors.white,
                                     )
@@ -407,7 +395,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   /// Método reutilizable para construir campos de texto.
-  /// Incluye soporte para mostrar/ocultar contraseña con ícono de ojo.
   Widget _buildTextField({
     required String label,
     required TextEditingController controller,
@@ -419,29 +406,24 @@ class _LoginScreenState extends State<LoginScreen> {
   }) {
     return TextField(
       controller: controller,
-      // Si es contraseña, oculta el texto según el estado de visibilidad
       obscureText: isPassword && !isPasswordVisible,
       keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: label,
         labelStyle: const TextStyle(color: Colors.black87, fontSize: 14),
         prefixText: prefixText,
-        // Ícono de ojo solo aparece en campos de contraseña
         suffixIcon: isPassword
             ? IconButton(
                 icon: Icon(
-                  // Cambia el ícono según si la contraseña es visible o no
                   isPasswordVisible ? Icons.visibility : Icons.visibility_off,
                   color: Colors.grey,
                 ),
                 onPressed: onTogglePassword,
               )
             : null,
-        // Línea inferior solamente, sin borde completo
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Colors.black38),
         ),
-        // Línea naranja cuando el campo está activo
         focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Color(0xFFE8651A), width: 2),
         ),
